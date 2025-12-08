@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="editor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Generador de Artículos Científicos en formato HTML</title>
+</head>
+
+<body>
+
+    <header class="app-header">
+        <h1 id="appTitle">Generador de Artículos Científicos</h1>
+        <div class="template-controls">
+            <label for="templateSelector">Seleccionar Diseño:</label>
+            <select id="templateSelector" class="template-select"></select>
+        </div>
+        <div class="action-buttons">
+            <button id="toggleModeBtn" class="action-button preview-button"><i class="fa-solid fa-eye"></i> Previsualizar</button>
+            <button id="exportBtn" class="action-button export-button"><i class="fa-solid fa-download"></i> Exportar Archivo HTML</button>
+        </div>
+    </header>
+
+    <div class="container-editor">
+        <div class="toolbar">
+            <button data-command="bold" title="Negrita"><b>B</b></button>
+            <button data-command="italic" title="Cursiva"><i>I</i></button>
+            <button data-command="underline" title="Subrayar"><u>U</u></button>
+
+            <button id="btnSuperscript" title="Superíndice">x<sup>2</sup></button>
+            <button id="btnSubscript" title="Subíndice">x<sub>2</sub></button>
+
+            <button data-command="formatBlock" data-value="h1" title="Título 1">H1</button>
+            <button data-command="formatBlock" data-value="h2" title="Título 2">H2</button>
+            <button data-command="formatBlock" data-value="h3" title="Título 3">H3</button>
+            <button data-command="formatBlock" data-value="p" title="Párrafo normal">P</button>
+
+            <button id="btnInsertImage" title="Insertar imagen"><i class="fa-regular fa-image"></i></button>
+
+            <button data-command="createLink" title="Enlace"><i class="fa-solid fa-paperclip"></i></button>
+            <button data-command="insertUnorderedList" title="Lista">•</button>
+            <button data-command="removeFormat" title="Limpiar formato">🧹</button>
+        </div>
+
+        <section class="metadata-section">
+            <h2 class="section-title">Metadatos de la Revista</h2>
+            <p>Revista (Volumen(Número): Páginas, Fecha, ISSN):</p>
+            <div id="meta-journal-info" contenteditable="true" class="editable-field">
+                ACRO-ECOLÓGICA 4(1): 1-2, agosto 2025. ISSN 2313-2906
+            </div>
+
+            <p>DOI:</p>
+            <div id="meta-doi" contenteditable="true" class="editable-field">
+                10.56469/rae.v4i1.1791
+            </div>
+
+            <p>Tipo de Artículo (Ej: Editorial):</p>
+            <div id="meta-editorial" contenteditable="true" class="editable-field">
+            </div>
+        </section>
+
+        <section class="title-section">
+            <h2 class="section-title">Títulos</h2>
+            <p>Título Principal (Español):</p>
+            <div id="article-title" contenteditable="true" class="editable-field title-field"
+                aria-placeholder="Importancia de los actores locales en el contexto de las áreas protegidas">
+                Importancia de los actores locales en el contexto de las áreas protegidas
+            </div>
+
+            <p>Título Secundario (Inglés):</p>
+            <div id="article-title-en" contenteditable="true" class="editable-field title-field">
+                Importance of local actors in the context of protected areas
+            </div>
+        </section>
+
+        <section class="author-section">
+            <h2 class="section-title">Autores y Afiliación</h2>
+            <p>Autores y Correspondencia (Usar <sup>1,2,*</sup> para subíndices):</p>
+            <div id="author-list" contenteditable="true" class="editable-field author-field">
+                <p>Susana Rengel Rojas<sup>1,2,*</sup></p>
+                <p><sup>*</sup>Autor de Correspondencia: srengel@uasb.edu.bo</p>
+            </div>
+
+            <p>Afiliaciones (Usar <sup>1</sup> para subíndices):</p>
+            <div id="affiliations" contenteditable="true" class="editable-field author-field">
+                <p><sup>1</sup> Universidad Andina Simón Bolívar, Cede Central, Sucre, Bolivia.</p>
+                <p><sup>2</sup> Universidad San Francisco Xavier de Chuquisaca, Sucre, Bolivia.</p>
+            </div>
+
+            <p>Fechas (Recibido y Aceptado):</p>
+            <div id="article-dates" contenteditable="true" class="editable-field">
+                <em>Recibido: 08/04/2025 Aceptado para publicación: 03/06/2025</em>
+            </div>
+        </section>
+
+        <section class="abstract-section">
+            <h2 class="section-title">Resumen</h2>
+            <p>Ingresa el resumen de tu artículo (opcional):</p>
+            <div id="article-abstract" contenteditable="true" class="editable-field abstract-field">
+                <p><strong>Resumen:</strong> Este artículo examina la importancia de los actores locales en la gestión de áreas protegidas...</p>
+                <p><strong>Palabras clave:</strong> áreas protegidas, actores locales, conservación, gestión comunitaria</p>
+            </div>
+        </section>
+
+        <section class="body-section">
+            <h2 class="section-title">Cuerpo del Artículo</h2>
+            <div id="article-body" contenteditable="true" class="editable-field main-body-field">
+                <p><strong>Sr. Editor:</strong></p>
+                <p>Las áreas protegidas (APs) son reconocidas globalmente como herramientas esenciales para conservar la
+                    biodiversidad...</p>
+                <p>A pesar de la creciente cobertura de APs (Shackleton et al. 2020), su manejo funcional enfrenta
+                    serios problemas...</p>
+                <p>Para que las APs sean verdaderamente efectivas y sostenibles, es imperativo fortalecer el rol de los
+                    actores locales...</p>
+            </div>
+        </section>
+
+        <section class="acknowledgments-section">
+            <h2 class="section-title">Agradecimientos</h2>
+            <p>Reconoce a las personas o instituciones que apoyaron tu trabajo (opcional):</p>
+            <div id="article-acknowledgments" contenteditable="true" class="editable-field acknowledgments-field">
+                <p><em>Agradecemos al Proyecto de Investigación XYZ por el financiamiento proporcionado...</em></p>
+                <p><em>Nuestro agradecimiento a los revisores anónimos por sus valiosos comentarios...</em></p>
+            </div>
+        </section>
+
+        <section class="references-section">
+            <h2 class="section-title">Referencias</h2>
+            <div id="article-references" contenteditable="true" class="editable-field main-body-field">
+                <p class="reference-item">
+                    Cao, M., Peng, L., & Liu, S. (2015). Analysis of the network of protected areas in China...
+                </p>
+                <p class="reference-item">
+                    Castro, A. J., Martin-Lopez, B., Lopez, E., Plieninger, T., Alcaraz-Segura, D., Vaughn, C. C., &
+                    Cabello, J. (2015). Do protected areas networks ensure the supply of ecosystem services? Spatial
+                    patterns...
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Contenedor de previsualización con controles mejorados -->
+    <div id="previewContainer" class="preview-container" style="display: none;">
+        <div class="preview-controls">
+            <div class="preview-title">
+                <i class="fa-solid fa-file-alt"></i> Previsualización del Artículo
+            </div>
+            <div class="preview-actions">
+                <button id="zoomInBtn" class="preview-action-btn" title="Acercar (Ctrl +)">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </button>
+                <button id="zoomOutBtn" class="preview-action-btn" title="Alejar (Ctrl -)">
+                    <i class="fa-solid fa-magnifying-glass-minus"></i>
+                </button>
+                <button id="fullscreenBtn" class="preview-action-btn" title="Pantalla completa (F11)">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+                <button id="resetZoomBtn" class="preview-action-btn" title="Restablecer zoom">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+        </div>
+        <iframe id="previewIframe" class="preview-iframe" title="Previsualización del artículo"></iframe>
+        <div class="preview-footer">
+            <span class="preview-info">
+                <i style="color: green;" class="fa-solid fa-info-circle"></i> 
+                Tamaño actual: <span id="currentZoom">100%</span>
+            </span>
+            <span class="preview-tip">
+                <i style="color: rgb(255, 196, 0);" class="fa-solid fa-lightbulb"></i> 
+                Presiona ESC para salir de pantalla completa
+            </span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
