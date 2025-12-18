@@ -72,6 +72,15 @@ body {
     margin-bottom: 15px;
 }
 
+.a_doi {
+    color: #2c7d32;
+    transition: all 0.3s;
+}
+
+.a_doi:hover {
+    color: darkgreen;
+}
+
 .editable-field {
     border: 1px solid #ccc;
     padding: 15px;
@@ -148,12 +157,12 @@ body {
 }
 
 .preview-button {
-    background-color: #4a90e2;
+    background-color: #aa9300;
     color: white;
 }
 
 .preview-button:hover {
-    background-color: #357ae8;
+    background-color: #746500;
 }
 
 .export-button {
@@ -165,7 +174,6 @@ body {
     background-color: #1e5a22;
 }
 
-/* Indicador de campo requerido */
 .required-field {
     border-left: 4px solid #ff9800;
 }
@@ -174,7 +182,6 @@ body {
     border-left-color: #2c7d32;
 }
 
-/* Contenedor de previsualización */
 .preview-container {
     width: 100%;
     max-width: 1000px;
@@ -257,6 +264,11 @@ body {
     border-radius: 0;
 }
 
+.text-align {
+    text-align: center !important;
+    display: block;
+}
+
 /* Responsive */
 @media (max-width: 1100px) {
     .preview-container {
@@ -275,14 +287,12 @@ body {
     }
 }
 
-/* Estilos para las nuevas secciones */
 .abstract-section,
 .acknowledgments-section {
     margin-top: 30px;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
-    border-left: 4px solid #4a90e2;
 }
 
 .abstract-field,
@@ -297,11 +307,10 @@ body {
 
 .abstract-field:focus,
 .acknowledgments-field:focus {
-    border-color: #4a90e2;
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+    border-color: rgb(172, 135, 0);
+    box-shadow: 0 0 5px rgba(225, 195, 1, 0.608);
 }
 
-/* Estilo específico para sección de resumen */
 .abstract-section {
     border-left-color: #2c7d32;
     background-color: #f0f9f0;
@@ -311,7 +320,6 @@ body {
     color: #2c7d32;
 }
 
-/* Estilo específico para sección de agradecimientos */
 .acknowledgments-section {
     border-left-color: #ff9800;
     background-color: #fff8e1;
@@ -325,4 +333,51 @@ body {
     display: flex;
     justify-content: center;
     gap: 20px;
+}
+
+.exit-fullscreen-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 10000;
+    background: rgba(55, 255, 0, 0.9);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.exit-fullscreen-btn:hover {
+    background: rgba(55, 255, 0, 0.9);
+    border-color: rgba(247, 255, 2, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+}
+
+.exit-fullscreen-btn i {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.exit-fullscreen-btn:hover i {
+    transform: translateX(-3px);
+}
+
+.preview-iframe.fullscreen {
+    z-index: 9999 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: white;
 }

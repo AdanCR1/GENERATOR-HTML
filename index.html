@@ -41,6 +41,7 @@
 
             <button data-command="createLink" title="Enlace"><i class="fa-solid fa-paperclip"></i></button>
             <button data-command="insertUnorderedList" title="Lista">•</button>
+            <button data-command="alignCenter" title="Alinear texto"><i class="fa-solid fa-align-center"></i></button>
             <button data-command="removeFormat" title="Limpiar formato">🧹</button>
         </div>
 
@@ -66,12 +67,12 @@
             <p>Título Principal (Español):</p>
             <div id="article-title" contenteditable="true" class="editable-field title-field"
                 aria-placeholder="Importancia de los actores locales en el contexto de las áreas protegidas">
-                Importancia de los actores locales en el contexto de las áreas protegidas
+                título
             </div>
 
             <p>Título Secundario (Inglés):</p>
             <div id="article-title-en" contenteditable="true" class="editable-field title-field">
-                Importance of local actors in the context of protected areas
+                title
             </div>
         </section>
 
@@ -85,8 +86,8 @@
 
             <p>Afiliaciones (Usar <sup>1</sup> para subíndices):</p>
             <div id="affiliations" contenteditable="true" class="editable-field author-field">
-                <p><sup>1</sup> Universidad Andina Simón Bolívar, Cede Central, Sucre, Bolivia.</p>
-                <p><sup>2</sup> Universidad San Francisco Xavier de Chuquisaca, Sucre, Bolivia.</p>
+                <p><sup>1</sup> Universidad...</p>
+                <p><sup>2</sup> Universidad...</p>
             </div>
 
             <p>Fechas (Recibido y Aceptado):</p>
@@ -98,16 +99,31 @@
         <section class="abstract-section">
             <h2 class="section-title">Resumen</h2>
             <p>Ingresa el resumen de tu artículo (opcional):</p>
-            <div id="article-abstract" contenteditable="true" class="editable-field abstract-field">
-                <p><strong>Resumen:</strong> Este artículo examina la importancia de los actores locales en la gestión de áreas protegidas...</p>
-                <p><strong>Palabras clave:</strong> áreas protegidas, actores locales, conservación, gestión comunitaria</p>
+            <div id="article-abstract-es" contenteditable="true" class="editable-field abstract-field">
+                <p>Este artículo examina la importancia de los actores locales en la gestión de áreas protegidas...</p>
+            </div>
+            <div class="keywords-title">Palabras clave:</div>
+            <div id="article-keywords-es" contenteditable="true" class="editable-field abstract-field">
+                <li>germinación</li>
+            </div>
+        </section>
+
+        <section class="abstract-section">
+            <h2 class="section-title">Abstract (Inglés)</h2>
+            <p>Ingresa el resumen de tu artículo en inglés (opcional):</p>
+            <div id="article-abstract-en" contenteditable="true" class="editable-field abstract-field">
+                <p>The study analyzes the geomorphological changes in the fluvial system...</p>
+            </div>
+            <div class="keywords-title">Keywords:</div>
+            <div id="article-keywords-en" contenteditable="true" class="editable-field abstract-field">
+                <li>germination</li>
             </div>
         </section>
 
         <section class="body-section">
             <h2 class="section-title">Cuerpo del Artículo</h2>
             <div id="article-body" contenteditable="true" class="editable-field main-body-field">
-                <p><strong>Sr. Editor:</strong></p>
+                <p>Sr. Editor:</p>
                 <p>Las áreas protegidas (APs) son reconocidas globalmente como herramientas esenciales para conservar la
                     biodiversidad...</p>
                 <p>A pesar de la creciente cobertura de APs (Shackleton et al. 2020), su manejo funcional enfrenta
@@ -117,7 +133,7 @@
             </div>
         </section>
 
-        <section class="acknowledgments-section">
+        <section class="abstract-section">
             <h2 class="section-title">Agradecimientos</h2>
             <p>Reconoce a las personas o instituciones que apoyaron tu trabajo (opcional):</p>
             <div id="article-acknowledgments" contenteditable="true" class="editable-field acknowledgments-field">
@@ -140,9 +156,12 @@
             </div>
         </section>
 
+        <footer>
+            <h2 class="section-title">Número de revista (Volumen(Número): Páginas, Fecha, ISSN):</h2>
+            <p id="number" contenteditable="true" class="editable-field">4(1): 1-2, agosto 2025. ISSN 2313-2906</p>
+        </footer>
     </div>
 
-    <!-- Contenedor de previsualización con controles mejorados -->
     <div id="previewContainer" class="preview-container" style="display: none;">
         <div class="preview-controls">
             <div class="preview-title">

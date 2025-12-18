@@ -1,27 +1,19 @@
+
 <div class="container">
-    <header class="journal-header">
-        <div class="journal-header-top">
-            <img class="logo_RAE" src="https://revistas.usfx.bo/public/journals/6/pageHeaderLogoImage_es_ES.png" alt="Logo Revista">
-            <div class="journal-header-info">
-                <h1 class="journal-title">{{META_JOURNAL_INFO}}</h1>
-                <div class="journal-info">
-                    <a class="a_doi" href="https://revistas.usfx.bo/index.php/rae/" target="_blank" >https://revistas.usfx.bo/index.php/rae/</a>
-                    <span class="journal-doi">DOI: <a href="https://doi.org/{{META_DOI}}" class="a_doi" target="_blank">{{META_DOI}}</a></span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="journal-editorial">
-            <span class="editorial-badge">{{META_EDITORIAL}}</span>
+    <header>
+        <img class="logo_RAE" src="https://revistas.usfx.bo/public/journals/6/pageHeaderLogoImage_es_ES.png" alt="Logo Revista">
+        <div class="container_title">
+            <h1 class="journal-title">{{META_JOURNAL_INFO}}</h1>
+            <a class="a_doi" href="https://revistas.usfx.bo/index.php/rae/" target="_blank" >https://revistas.usfx.bo/index.php/rae/</a>
+            <span class="journal-doi">DOI: <a href="https://doi.org/{{META_DOI}}" class="a_doi" target="_blank">{{META_DOI}}</a></span>
         </div>
     </header>
 
+    <h3 class="editorial-badge">{{META_EDITORIAL}}</h3>
+    
     <article class="scientific-article">
-        <!-- Títulos -->
-        <header class="article-header">
-            <h1 class="article-title" contenteditable="true">{{ARTICLE_TITLE}}</h1>
-            <h2 class="article-title-en" contenteditable="true">{{ARTICLE_TITLE_EN}}</h2>
-        </header>
+        <h1 contenteditable="true">{{ARTICLE_TITLE}}</h1>
+        <h2 contenteditable="true">{{ARTICLE_TITLE_EN}}</h2>
 
         <section class="article-authors">
             <div class="authors-section" contenteditable="true">
@@ -33,14 +25,35 @@
             </div>
         </section>
 
-        <div class="article-dates" contenteditable="true">
-            {{ARTICLE_DATES}}
+        <div class="dates" contenteditable="true">
+            <p class="dates_after date_open">
+                {{ARTICLE_DATES}}
+            </p>
         </div>
 
         <section class="abstract">
             <h3>Resumen</h3>
-            <div contenteditable="true">
-                {{ARTICLE_ABSTRACT}}
+            <p contenteditable="true">
+                {{ARTICLE_ABSTRACT_ES}}
+            </p>
+            <div class="keywords">
+              <div class="keywords-title">Palabras clave:</div>
+              <ul class="keywords-list">
+                {{ARTICLE_KEYWORDS_ES}}
+              </ul>
+            </div>
+        </section>
+
+        <section class="abstract">
+            <h3>abstract</h3>
+            <p contenteditable="true">
+                {{ARTICLE_ABSTRACT_EN}}
+            </p>
+            <div class="keywords">
+              <div class="keywords-title">keywords:</div>
+              <ul class="keywords-list">
+                {{ARTICLE_KEYWORDS_EN}}
+              </ul>
             </div>
         </section>
 
@@ -50,12 +63,13 @@
             </div>
         </section>
 
-        <section class="acknowledgments">
+        <section class="abstract">
             <h3>Agradecimientos</h3>
             <div contenteditable="true">
                 {{ARTICLE_ACKNOWLEDGMENTS}}
             </div>
         </section>
+
 
         <section class="article-references">
             <h2>Referencias</h2>
@@ -65,19 +79,8 @@
         </section>
     </article>
 
-    <footer class="article-footer">
-        <div class="footer-content">
-            <div class="copyright-info">
-                <p>&copy; <span id="current-year">2025</span> Revista Científica. Todos los derechos reservados.</p>
-                <p>Este artículo se distribuye bajo la licencia <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International</a>.</p>
-            </div>
-            
-            <div class="footer-links">
-                <a href="#" target="_blank">Política de privacidad</a> | 
-                <a href="#" target="_blank">Términos de uso</a> | 
-                <a href="mailto:contacto@revista.com" target="_blank">Contacto</a>
-            </div>
-        </div>
+    <footer>
+        <p>© 2025 AGRO-ECOLÓGICA {{NUMBER}}</p>
     </footer>
 </div>
 

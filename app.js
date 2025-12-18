@@ -1,4 +1,3 @@
-// app.js (Versión corregida y organizada)
 // =====================================================================
 // 1. FORMATO DE TEXTO Y ESTADO GLOBAL
 // =====================================================================
@@ -86,7 +85,6 @@ function restoreFocus() {
 
 // Función para actualizar el estado visual de los botones
 function updateToolbarButtons() {
-    // Limpiar todos los botones activos primero
     document.querySelectorAll('.toolbar button').forEach(btn => {
         btn.classList.remove('active');
     });
@@ -97,9 +95,7 @@ function updateToolbarButtons() {
     const range = selection.getRangeAt(0);
     if (!range) return;
 
-    // Importante: asegurarnos de que la selección está dentro de un contenteditable o execCommand funcione
     try {
-        // Estos comandos funcionan bien con queryCommandState
         const commands = [
             { cmd: 'bold', selector: 'button[data-command="bold"]' },
             { cmd: 'italic', selector: 'button[data-command="italic"]' },
@@ -116,7 +112,7 @@ function updateToolbarButtons() {
             }
         });
 
-        // Enlaces: queryCommandState no existe para createLink, usamos selección
+        // Verificar enlace
         if (selection.rangeCount > 0) {
             const parentAnchor = range.commonAncestorContainer;
             const anchor = parentAnchor.nodeType === 3 
@@ -129,7 +125,31 @@ function updateToolbarButtons() {
             }
         }
 
-        // Encabezados (h1, h2, h3, p) - usando queryCommandValue o nodo ancestro
+        // Verificar texto centrado - VERSIÓN MEJORADA
+        try {
+            const alignBtn = document.querySelector('button[data-command="alignCenter"]');
+            if (alignBtn) {
+                const container = range.commonAncestorContainer;
+                const element = container.nodeType === 3 ? container.parentElement : container;
+                const closestBlock = element.closest('p, div, h1, h2, h3, h4, h5, h6, li');
+
+                const isCentered = closestBlock && (
+                    closestBlock.classList.contains('text-align') || 
+                    closestBlock.style.textAlign === 'center' ||
+                    window.getComputedStyle(closestBlock).textAlign === 'center'
+                );
+            
+                if (isCentered) {
+                    alignBtn.classList.add('active');
+                } else {
+                    alignBtn.classList.remove('active');
+                }
+            }
+        } catch (e) {
+            console.warn('Error verificando texto centrado:', e);
+        }
+
+        // Verificar encabezados
         const heading = document.queryCommandValue('formatBlock').toLowerCase().replace(/[^a-z0-9]/g, '');
         const validHeadings = ['h1', 'h2', 'h3', 'p'];
         
@@ -138,7 +158,6 @@ function updateToolbarButtons() {
             if (btn) btn.classList.add('active');
         }
 
-        // Alternativa más robusta para encabezados (por si queryCommandValue falla)
         const container = range.commonAncestorContainer;
         const element = container.nodeType === 3 ? container.parentNode : container;
         const block = element.closest ? element.closest('h1,h2,h3,p') : null;
@@ -172,13 +191,19 @@ function formatDoc(command, value = null) {
                 }
                 break;
             case 'createLink':
-                const url = prompt('Introduce el enlace (URL):', 'https://');
-                if (url) {
-                    document.execCommand('createLink', false, url);
-                }
+                createLinkWithClass();
                 break;
             case 'insertImage':
                 insertImage();
+                break;
+            case 'alignCenter':
+                alignTextCenter();
+                break;
+            case 'insertUnorderedList':
+                document.execCommand('insertUnorderedList', false, null);
+                break;
+            case 'removeFormat':
+                document.execCommand('removeFormat', false, null);
                 break;
             default:
                 document.execCommand(command, false, value);
@@ -194,7 +219,6 @@ function formatDoc(command, value = null) {
 function insertImage() {
     saveFocus();
     
-    // Crear input de archivo
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
@@ -207,30 +231,22 @@ function insertImage() {
         reader.onload = (event) => {
             const imageUrl = event.target.result;
             
-            // Insertar la imagen en el contenido editable
             const activeElement = lastFocusedElement || document.activeElement;
             if (activeElement && activeElement.hasAttribute('contenteditable')) {
-                // Guardar selección actual
                 const selection = window.getSelection();
                 const range = selection.getRangeAt(0);
                 
-                // Crear elemento imagen
                 const img = document.createElement('img');
                 img.src = imageUrl;
-                img.style.maxWidth = '100%';
-                img.style.height = 'auto';
-                img.alt = 'Imagen insertada';
+                img.alt = 'Imagen insertada (RAE-USFX)';
                 
-                // Insertar imagen
                 range.insertNode(img);
                 
-                // Mover cursor después de la imagen
                 range.setStartAfter(img);
                 range.collapse(true);
                 selection.removeAllRanges();
                 selection.addRange(range);
             } else {
-                // Si no hay elemento enfocado, pedir al usuario
                 const containerId = prompt(
                     '¿En qué sección quieres insertar la imagen?\n' +
                     '1. article-body (Cuerpo del artículo)\n' +
@@ -266,6 +282,78 @@ function insertImage() {
     input.click();
 }
 
+function createLinkWithClass() {
+    const url = prompt('Introduce el enlace (URL):', 'https://');
+    if (url) {
+        saveFocus();
+        
+        const selection = window.getSelection();
+        if (!selection.toString().trim()) {
+            alert('Primero selecciona el texto que quieres convertir en enlace.');
+            restoreFocus();
+            return;
+        }
+        
+        document.execCommand('createLink', false, url);
+        
+        const range = selection.getRangeAt(0);
+        if (range) {
+            const parentAnchor = range.commonAncestorContainer;
+            const anchor = parentAnchor.nodeType === 3 
+                ? parentAnchor.parentNode.closest('a')
+                : parentAnchor.closest('a');
+                
+            if (anchor) {
+                anchor.classList.add('a_doi');
+                
+                if (url.includes('doi.org') || url.includes('http')) {
+                    anchor.setAttribute('target', '_blank');
+                    anchor.setAttribute('rel', 'noopener noreferrer');
+                }
+            }
+        }
+        
+        restoreFocus();
+    }
+}
+
+
+
+function alignTextCenter() {
+    saveFocus();
+    
+    const selection = window.getSelection();
+    if (!selection.rangeCount) return;
+
+    const range = selection.getRangeAt(0);
+    let container = range.commonAncestorContainer;
+
+    // Asegurarnos de tener un elemento y no un nodo de texto
+    if (container.nodeType === Node.TEXT_NODE) {
+        container = container.parentElement;
+    }
+
+    // Buscamos el bloque contenedor más cercano (párrafo, título, etc.)
+    const block = container.closest('p, div, h1, h2, h3, h4, h5, h6, li');
+
+    if (block) {
+        // Alternar la clase 'text-align' (Asegúrate que tu CSS tenga .text-align { text-align: center !important; })
+        if (block.classList.contains('text-align')) {
+            block.classList.remove('text-align');
+            block.style.textAlign = ''; // Limpiar estilo inline si existiera
+        } else {
+            block.classList.add('text-align');
+            block.style.textAlign = 'center'; // Aseguramos el centrado inmediato
+        }
+    } else {
+        // Si no hay un bloque (texto suelto), usamos el comando nativo que es más seguro
+        document.execCommand('justifyCenter', false, null);
+    }
+    
+    restoreFocus();
+    setTimeout(updateToolbarButtons, 100);
+}
+
 // =====================================================================
 // 3. CARGA DE PLANTILLAS
 // =====================================================================
@@ -278,19 +366,15 @@ async function loadTemplate(templateId, forcePreviewUpdate = false) {
     }
 
     try {
-        // Cargar HTML
         const responseHTML = await fetch(info.html);
         currentTemplateHTML = await responseHTML.text();
 
-        // Cargar CSS
         const responseCSS = await fetch(info.css);
         currentTemplateCSS = await responseCSS.text();
 
         console.log(`Plantilla "${info.name}" cargada.`);
         document.getElementById('appTitle').textContent = `Generador de Artículos Científicos - ${info.name}`;
         
-        // Si estamos en modo previsualización y se cargó una nueva plantilla,
-        // actualizar automáticamente el iframe
         if (!isEditingMode && forcePreviewUpdate) {
             updatePreviewIframe();
         }
@@ -304,7 +388,7 @@ async function loadTemplate(templateId, forcePreviewUpdate = false) {
 // Función para actualizar el iframe de previsualización
 function updatePreviewIframe() {
     if (!currentTemplateHTML || isEditingMode) {
-        return; // No actualizar si estamos en modo edición o no hay plantilla
+        return;
     }
     
     console.log('Actualizando previsualización con nueva plantilla...');
@@ -315,13 +399,11 @@ function updatePreviewIframe() {
 
     const iframe = document.getElementById('previewIframe');
     
-    // Guardar la posición de scroll actual
     const previousScrollTop = iframe.contentDocument?.documentElement?.scrollTop || 0;
     
     iframe.src = url;
     
     iframe.onload = function() {
-        // Restaurar la posición de scroll
         try {
             const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
             if (iframeDoc && iframeDoc.documentElement) {
@@ -331,7 +413,6 @@ function updatePreviewIframe() {
             console.log('No se pudo restaurar la posición del scroll');
         }
         
-        // Reaplicar el zoom
         applyZoomToPreview();
     };
 }
@@ -341,7 +422,7 @@ function updatePreviewIframe() {
 // =====================================================================
 
 function generateFinalHTML(exportMode = false) {
-    // Capturar contenido de áreas editables
+    // 1. Capturar los valores de los campos
     const title = document.getElementById('article-title').innerHTML.trim();
     const titleEn = document.getElementById('article-title-en').innerHTML.trim();
     const journalInfo = document.getElementById('meta-journal-info').innerHTML.trim();
@@ -352,20 +433,21 @@ function generateFinalHTML(exportMode = false) {
     const articleDates = document.getElementById('article-dates').innerHTML.trim();
     const articleBody = document.getElementById('article-body').innerHTML.trim();
     const articleReferences = document.getElementById('article-references').innerHTML.trim();
-
-    const articleAbstract = document.getElementById('article-abstract')?.innerHTML.trim() || '';
+    const articleAbstractEs = document.getElementById('article-abstract-es')?.innerHTML.trim() || '';
+    const articleAbstractEn = document.getElementById('article-abstract-en')?.innerHTML.trim() || '';
     const articleAcknowledgments = document.getElementById('article-acknowledgments')?.innerHTML.trim() || '';
+    const articleKeywordsEs = document.getElementById('article-keywords-es')?.innerHTML.trim() || '';
+    const articleKeywordsEn = document.getElementById('article-keywords-en')?.innerHTML.trim() || '';
+    const number = document.getElementById('number')?.innerHTML.trim() || '';
 
-    // Plantilla HTML completa
+    // 2. Preparar la estructura base
     const fullTemplate = `<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${title}</title>
-    <style>
-        ${currentTemplateCSS}
-    </style>
+    <style>${currentTemplateCSS}</style>
 </head>
 <body>
     <div class="container_theme">
@@ -373,13 +455,11 @@ function generateFinalHTML(exportMode = false) {
         <button class="theme_oscuro" id="theme_oscuro">oscuro</button>
     </div>
     ${currentTemplateHTML}
-    <script>
-        ${THEME_SCRIPT_STRING}
-    </script>
+    <script>${THEME_SCRIPT_STRING}</script>
 </body>
 </html>`;
 
-    // Reemplazar marcadores de posición (incluyendo los nuevos)
+    // 3. Reemplazar variables (Placeholders)
     let finalHTML = fullTemplate
         .replace(/{{META_JOURNAL_INFO}}/g, journalInfo)
         .replace(/{{ARTICLE_TITLE}}/g, title)
@@ -389,19 +469,28 @@ function generateFinalHTML(exportMode = false) {
         .replace(/{{AUTHOR_LIST}}/g, authorList)
         .replace(/{{AFFILIATIONS}}/g, affiliations)
         .replace(/{{ARTICLE_DATES}}/g, articleDates)
-        // NUEVOS REEMPLAZOS
-        .replace(/{{ARTICLE_ABSTRACT}}/g, articleAbstract)
+        .replace(/{{ARTICLE_ABSTRACT_ES}}/g, articleAbstractEs)
+        .replace(/{{ARTICLE_ABSTRACT_EN}}/g, articleAbstractEn)
+        .replace(/{{ARTICLE_KEYWORDS_ES}}/g, articleKeywordsEs)
+        .replace(/{{ARTICLE_KEYWORDS_EN}}/g, articleKeywordsEn)
         .replace(/{{ARTICLE_BODY}}/g, articleBody)
         .replace(/{{ARTICLE_ACKNOWLEDGMENTS}}/g, articleAcknowledgments)
-        .replace(/{{ARTICLE_REFERENCES}}/g, articleReferences);
+        .replace(/{{ARTICLE_REFERENCES}}/g, articleReferences)
+        .replace(/{{NUMBER}}/g, number);
 
+    // 4. LIMPIEZA DE CONTENTEDITABLE (Procesamiento DOM)
+    // Creamos un elemento temporal para manipular el HTML de forma segura
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(finalHTML, 'text/html');
+    
+    // Buscamos TODOS los elementos que tengan el atributo y lo eliminamos
+    const editableElements = doc.querySelectorAll('[contenteditable]');
+    editableElements.forEach(el => {
+        el.removeAttribute('contenteditable');
+    });
 
-    // Si estamos en modo exportación, mantener contenido editable
-    if (!exportMode) {
-        finalHTML = finalHTML.replace(/contenteditable="true"/g, 'contenteditable="false"');
-    }
-
-    return finalHTML;
+    // 5. Retornar el HTML limpio como string
+    return doc.documentElement.outerHTML;
 }
 
 // =====================================================================
@@ -417,7 +506,6 @@ function applyZoomToPreview() {
         iframe.style.width = `${100 / zoomLevel}%`;
         iframe.style.height = `${100 / zoomLevel}%`;
         
-        // Actualizar el indicador de zoom
         const zoomIndicator = document.getElementById('currentZoom');
         if (zoomIndicator) {
             zoomIndicator.textContent = `${Math.round(zoomLevel * 100)}%`;
@@ -433,19 +521,109 @@ function toggleFullscreenPreview() {
         
         const btn = document.getElementById('fullscreenBtn');
         const icon = btn.querySelector('i');
+        
         if (iframe.classList.contains('fullscreen')) {
             icon.className = 'fa-solid fa-compress';
-            btn.title = 'Salir de pantalla completa (ESC)';
+            btn.title = 'Salir de pantalla completa';
             
-            // En pantalla completa, desactivar transformaciones de zoom
             iframe.style.transform = 'none';
             iframe.style.width = '100%';
             iframe.style.height = '100%';
+            
+            createExitFullscreenButton();
+            
         } else {
             icon.className = 'fa-solid fa-expand';
             btn.title = 'Pantalla completa (F11)';
-            applyZoomToPreview(); // Reaplicar zoom al salir
+            applyZoomToPreview();
+            
+            removeExitFullscreenButton();
         }
+    }
+}
+
+function createExitFullscreenButton() {
+    removeExitFullscreenButton();
+    
+    const exitBtn = document.createElement('button');
+    exitBtn.id = 'exitFullscreenBtn';
+    exitBtn.className = 'exit-fullscreen-btn';
+    exitBtn.innerHTML = '<i class="fa-solid fa-left-long"></i>';
+    exitBtn.title = 'Salir de pantalla completa (ESC)';
+    
+    exitBtn.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 10px;
+        z-index: 10000;
+        background: rgba(56, 147, 0, 0.8);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    `;
+    
+    exitBtn.onmouseenter = function() {
+        this.style.background = 'rgba(28, 143, 7, 0.79)';
+        this.style.borderColor = 'rgba(255, 208, 0, 0.6)';
+        this.style.transform = 'translateY(-2px)';
+    };
+    
+    exitBtn.onmouseleave = function() {
+        this.style.background = 'rgba(35, 110, 0, 0.97)';
+        this.style.borderColor = 'rgba(225, 255, 0, 0.3)';
+        this.style.transform = 'translateY(0)';
+    };
+    
+    exitBtn.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleFullscreenPreview();
+    };
+    
+    document.body.appendChild(exitBtn);
+    
+    try {
+        const iframeDoc = document.getElementById('previewIframe').contentDocument;
+        if (iframeDoc && iframeDoc.body) {
+            const iframeExitBtn = exitBtn.cloneNode(true);
+            iframeExitBtn.id = 'exitFullscreenBtnIframe';
+            iframeExitBtn.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleFullscreenPreview();
+            };
+            iframeDoc.body.appendChild(iframeExitBtn);
+        }
+    } catch (e) {
+        console.log('No se pudo agregar botón al iframe:', e);
+    }
+}
+
+// Función para remover el botón de salir
+function removeExitFullscreenButton() {
+    const exitBtn = document.getElementById('exitFullscreenBtn');
+    if (exitBtn) {
+        exitBtn.remove();
+    }
+    
+    try {
+        const iframe = document.getElementById('previewIframe');
+        if (iframe.contentDocument) {
+            const iframeExitBtn = iframe.contentDocument.getElementById('exitFullscreenBtnIframe');
+            if (iframeExitBtn) {
+                iframeExitBtn.remove();
+            }
+        }
+    } catch (e) {
     }
 }
 
@@ -456,13 +634,11 @@ function togglePreviewMode() {
     const toggleBtn = document.getElementById('toggleModeBtn');
     
     if (isEditingMode) {
-        // --- Cambiar a Modo Previsualización ---
         if (!currentTemplateHTML) {
             alert("Por favor, selecciona y carga una plantilla primero.");
             return;
         }
         
-        // Resetear zoom
         zoomLevel = 1.0;
         
         const finalHTML = generateFinalHTML(false);
@@ -482,7 +658,6 @@ function togglePreviewMode() {
         isEditingMode = false;
         
     } else {
-        // --- Cambiar a Modo Edición ---
         editorContainer.style.display = 'block';
         previewContainer.style.display = 'none';
         toggleBtn.innerHTML = '<i class="fa-solid fa-eye"></i> Previsualizar';
@@ -508,17 +683,14 @@ function exportHTML() {
         return;
     }
 
-    // Validar contenido mínimo
     const title = document.getElementById('article-title').textContent.trim();
     if (!title) {
         alert("Por favor, ingresa un título principal para el artículo.");
         return;
     }
 
-    // Generar el HTML final en modo exportación
     const finalHTML = generateFinalHTML(true);
 
-    // Crear el Blob y forzar la descarga
     const blob = new Blob([finalHTML], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -558,6 +730,8 @@ document.addEventListener("DOMContentLoaded", () => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 formatDoc(command, value);
+                
+                setTimeout(updateToolbarButtons, 50);
             });
         }
         
@@ -567,6 +741,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault();
                     formatDoc(cmd);
+                    setTimeout(updateToolbarButtons, 50);
                 });
             }
         }
@@ -575,7 +750,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. Configurar selector de plantillas
     const templateSelector = document.getElementById('templateSelector');
     
-    // Llenar selector
     for (const [id, info] of Object.entries(TEMPLATE_INFO)) {
         const option = document.createElement('option');
         option.value = id;
@@ -583,15 +757,12 @@ document.addEventListener("DOMContentLoaded", () => {
         templateSelector.appendChild(option);
     }
     
-    // Cargar primera plantilla por defecto
     loadTemplate(templateSelector.value);
     
-    // Configurar cambio de plantilla
     templateSelector.addEventListener('change', (e) => {
         const selectedTemplate = e.target.value;
         console.log(`Cambiando a plantilla: ${selectedTemplate}`);
         
-        // Cargar la nueva plantilla y forzar actualización de previsualización si está activa
         loadTemplate(selectedTemplate, true);
     });
 
@@ -628,7 +799,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // 7. Atajos de teclado
     document.addEventListener('keydown', (e) => {
-        // Salir de pantalla completa con ESC
         if (e.key === 'Escape') {
             const iframe = document.getElementById('previewIframe');
             if (iframe && iframe.classList.contains('fullscreen')) {
@@ -636,7 +806,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
         
-        // Atajos de zoom (Ctrl + y Ctrl -)
         if (e.ctrlKey && !isEditingMode) {
             if (e.key === '+' || e.key === '=') {
                 e.preventDefault();
