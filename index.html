@@ -6,20 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="editor.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/919/919827.png" type="image/x-icon">
     <title>Generador de Artículos Científicos en formato HTML</title>
 </head>
 
 <body>
 
     <header class="app-header">
-        <h1 id="appTitle">Generador de Artículos Científicos</h1>
+        <div class="theme-toggle-container">
+            <button id="theme_claro" class="theme-btn" title="Modo Claro">
+                <i class="fa-solid fa-lightbulb"></i>
+            </button>
+            <button id="theme_oscuro" class="theme-btn" title="Modo Oscuro">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+        <h1 id="appTitle">Generador de Artículos Científicos en formato HTML</h1>
         <div class="template-controls">
-            <label for="templateSelector">Seleccionar Diseño:</label>
-            <select id="templateSelector" class="template-select"></select>
+            <div class="control-group">
+                <label for="typeSelector">Tipo de Artículo:</label>
+                <select id="typeSelector" class="template-select">
+                    <option value="original">Artículo Original</option>
+                    <option value="review">Artículo de Revisión</option>
+                    <option value="brief">Comunicación Breve</option>
+                    <option value="letter">Carta al Editor</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="designSelector">Diseño Visual:</label>
+                <select id="designSelector" class="template-select">
+                </select>
+            </div>
         </div>
         <div class="action-buttons">
-            <button id="toggleModeBtn" class="action-button preview-button"><i class="fa-solid fa-eye"></i> Previsualizar</button>
-            <button id="exportBtn" class="action-button export-button"><i class="fa-solid fa-download"></i> Exportar Archivo HTML</button>
+            <button id="toggleModeBtn" class="action-button preview-button"><i class="fa-solid fa-eye"></i>
+                Previsualizar</button>
+            <button id="exportBtn" class="action-button export-button"><i class="fa-solid fa-download"></i> Exportar
+                Archivo HTML</button>
         </div>
     </header>
 
@@ -185,17 +208,18 @@
         <iframe id="previewIframe" class="preview-iframe" title="Previsualización del artículo"></iframe>
         <div class="preview-footer">
             <span class="preview-info">
-                <i style="color: green;" class="fa-solid fa-info-circle"></i> 
+                <i style="color: green;" class="fa-solid fa-info-circle"></i>
                 Tamaño actual: <span id="currentZoom">100%</span>
             </span>
             <span class="preview-tip">
-                <i style="color: rgb(255, 196, 0);" class="fa-solid fa-lightbulb"></i> 
+                <i style="color: rgb(255, 196, 0);" class="fa-solid fa-lightbulb"></i>
                 Presiona ESC para salir de pantalla completa
             </span>
         </div>
     </div>
 
     <script src="app.js"></script>
+    <script> document.addEventListener("DOMContentLoaded", () => { const btnClaro = document.getElementById("theme_claro"); const btnOscuro = document.getElementById("theme_oscuro"); btnOscuro.addEventListener("click", () => { document.body.classList.add("dark-mode"); }); btnClaro.addEventListener("click", () => { document.body.classList.remove("dark-mode"); }); }); </script>
 </body>
 
 </html>

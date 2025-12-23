@@ -1,11 +1,17 @@
 
 <div class="container">
-    <header>
-        <img class="logo_RAE" src="https://revistas.usfx.bo/public/journals/6/pageHeaderLogoImage_es_ES.png" alt="Logo Revista">
-        <div class="container_title">
-            <h1 class="journal-title">{{META_JOURNAL_INFO}}</h1>
-            <a class="a_doi" href="https://revistas.usfx.bo/index.php/rae/" target="_blank" >https://revistas.usfx.bo/index.php/rae/</a>
-            <span class="journal-doi">DOI: <a href="https://doi.org/{{META_DOI}}" class="a_doi" target="_blank">{{META_DOI}}</a></span>
+    <header class="journal-header">
+        <div class="journal-header-top">
+            <img class="logo_RAE" src="https://revistas.usfx.bo/public/journals/6/pageHeaderLogoImage_es_ES.png" alt="Logo Revista">
+            <div class="container_title">
+                <h1 class="journal-title">{{META_JOURNAL_INFO}}</h1>
+                <a class="a_doi" href="https://revistas.usfx.bo/index.php/rae/" target="_blank" >https://revistas.usfx.bo/index.php/rae/</a>
+                <span class="journal-doi">DOI: <a href="https://doi.org/{{META_DOI}}" class="a_doi" target="_blank">{{META_DOI}}</a></span>
+            </div>
+        </div>
+        
+        <div class="journal-editorial">
+            <span class="editorial-badge">Editorial</span>
         </div>
     </header>
 
@@ -63,14 +69,6 @@
             </div>
         </section>
 
-        <section class="abstract">
-            <h3>Agradecimientos</h3>
-            <div contenteditable="true">
-                {{ARTICLE_ACKNOWLEDGMENTS}}
-            </div>
-        </section>
-
-
         <section class="article-references">
             <h2>Referencias</h2>
             <div class="references-content" contenteditable="true">
@@ -80,7 +78,7 @@
     </article>
 
     <footer>
-        <p>© 2025 AGRO-ECOLÓGICA {{NUMBER}}</p>
+        <p>&copy; <span id="current-year">2025</span> AGRO-ECOLÓGICA {{NUMBER}}</p>
     </footer>
 </div>
 

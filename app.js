@@ -2,32 +2,20 @@
 // 1. FORMATO DE TEXTO Y ESTADO GLOBAL
 // =====================================================================
 
-const TEMPLATE_INFO = {
-    'template1': { 
-        name: 'Diseño Académico Clásico', 
-        html: '/templates/template.html', 
-        css: '/templates/template1.css' 
-    },
-    'template2': { 
-        name: 'Diseño Académico moderno', 
-        html: '/templates/template.html', 
-        css: '/templates/template2.css' 
-    },
-    'template3': { 
-        name: 'Diseño moderno', 
-        html: '/templates/template.html', 
-        css: '/templates/template3.css' 
-    },
-    'template4': { 
-        name: 'Diseño minimalista', 
-        html: '/templates/template.html', 
-        css: '/templates/template4.css' 
-    },
-    'template5': { 
-        name: 'Diseño biofílico', 
-        html: '/templates/template.html', 
-        css: '/templates/template5.css' 
-    },
+// Tipos de Artículo: Controlan el archivo HTML / Layout
+const ARTICLE_LAYOUTS = {
+    'original': { name: 'Artículo Original', html: '/templates/template1.html' },
+    'review':   { name: 'Artículo de Revisión', html: '/templates/template2.html' },
+    'brief':    { name: 'Comunicación Breve', html: '/templates/template3.html' },
+    'letter':   { name: 'Carta al Editor', html: '/templates/template4.html' }
+};
+
+// Diseños Visuales: Controlan el archivo CSS
+const VISUAL_DESIGNS = {
+    'classic':  { name: 'Académico Clásico', css: '/templates/template1.css' },
+    'modern':   { name: 'Moderno', css: '/templates/template2.css' },
+    'minimal':  { name: 'Minimalista', css: '/templates/template3.css' },
+    'biophilic':{ name: 'Biofílico', css: '/templates/template4.css' }
 };
 
 let currentTemplateHTML = '';
@@ -317,8 +305,6 @@ function createLinkWithClass() {
     }
 }
 
-
-
 function alignTextCenter() {
     saveFocus();
     
@@ -328,25 +314,21 @@ function alignTextCenter() {
     const range = selection.getRangeAt(0);
     let container = range.commonAncestorContainer;
 
-    // Asegurarnos de tener un elemento y no un nodo de texto
     if (container.nodeType === Node.TEXT_NODE) {
         container = container.parentElement;
     }
 
-    // Buscamos el bloque contenedor más cercano (párrafo, título, etc.)
     const block = container.closest('p, div, h1, h2, h3, h4, h5, h6, li');
 
     if (block) {
-        // Alternar la clase 'text-align' (Asegúrate que tu CSS tenga .text-align { text-align: center !important; })
         if (block.classList.contains('text-align')) {
             block.classList.remove('text-align');
-            block.style.textAlign = ''; // Limpiar estilo inline si existiera
+            block.style.textAlign = '';
         } else {
             block.classList.add('text-align');
-            block.style.textAlign = 'center'; // Aseguramos el centrado inmediato
+            block.style.textAlign = 'center';
         }
     } else {
-        // Si no hay un bloque (texto suelto), usamos el comando nativo que es más seguro
         document.execCommand('justifyCenter', false, null);
     }
     
@@ -358,30 +340,29 @@ function alignTextCenter() {
 // 3. CARGA DE PLANTILLAS
 // =====================================================================
 
-async function loadTemplate(templateId, forcePreviewUpdate = false) {
-    const info = TEMPLATE_INFO[templateId];
-    if (!info) {
-        console.error('Plantilla no encontrada:', templateId);
-        return;
-    }
+async function loadResources(forcePreviewUpdate = false) {
+    const typeId = document.getElementById('typeSelector').value;
+    const designId = document.getElementById('designSelector').value;
 
     try {
-        const responseHTML = await fetch(info.html);
+        const layoutUrl = ARTICLE_LAYOUTS[typeId].html;
+        const responseHTML = await fetch(layoutUrl);
         currentTemplateHTML = await responseHTML.text();
 
-        const responseCSS = await fetch(info.css);
+        const cssUrl = VISUAL_DESIGNS[designId].css;
+        const responseCSS = await fetch(cssUrl);
         currentTemplateCSS = await responseCSS.text();
 
-        console.log(`Plantilla "${info.name}" cargada.`);
-        document.getElementById('appTitle').textContent = `Generador de Artículos Científicos - ${info.name}`;
+        console.log(`Recursos cargados: Tipo [${typeId}] - Diseño [${designId}]`);
         
+        document.getElementById('appTitle').textContent = 
+            `Generando: ${ARTICLE_LAYOUTS[typeId].name} (${VISUAL_DESIGNS[designId].name}) en HTML`;
+
         if (!isEditingMode && forcePreviewUpdate) {
             updatePreviewIframe();
         }
-        
     } catch (error) {
-        console.error('Error al cargar la plantilla:', error);
-        alert('Hubo un error al cargar la plantilla seleccionada.');
+        console.error('Error cargando recursos:', error);
     }
 }
 
@@ -748,23 +729,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 3. Configurar selector de plantillas
-    const templateSelector = document.getElementById('templateSelector');
-    
-    for (const [id, info] of Object.entries(TEMPLATE_INFO)) {
+    const typeSelector = document.getElementById('typeSelector');
+    const designSelector = document.getElementById('designSelector');
+
+    for (const [id, info] of Object.entries(VISUAL_DESIGNS)) {
         const option = document.createElement('option');
         option.value = id;
         option.textContent = info.name;
-        templateSelector.appendChild(option);
+        designSelector.appendChild(option);
     }
-    
-    loadTemplate(templateSelector.value);
-    
-    templateSelector.addEventListener('change', (e) => {
-        const selectedTemplate = e.target.value;
-        console.log(`Cambiando a plantilla: ${selectedTemplate}`);
-        
-        loadTemplate(selectedTemplate, true);
-    });
+
+    loadResources();
+
+    typeSelector.addEventListener('change', () => loadResources(true));
+    designSelector.addEventListener('change', () => loadResources(true));
 
     // 4. Configurar botones principales
     document.getElementById('exportBtn').addEventListener('click', exportHTML);
