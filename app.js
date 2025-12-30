@@ -4,18 +4,18 @@
 
 // Tipos de Artículo: Controlan el archivo HTML / Layout
 const ARTICLE_LAYOUTS = {
-    'original': { name: 'Artículo Original', html: './templates./template1.html' },
-    'review':   { name: 'Artículo de Revisión', html: './templates./template2.html' },
-    'brief':    { name: 'Comunicación Breve', html: './templates./template3.html' },
-    'letter':   { name: 'Carta al Editor', html: './templates./template4.html' }
+    'original': { name: 'Artículo Original', html: './templates/template1.html' },
+    'review':   { name: 'Artículo de Revisión', html: './templates/template2.html' },
+    'brief':    { name: 'Comunicación Breve', html: './templates/template3.html' },
+    'letter':   { name: 'Carta al Editor', html: './templates/template4.html' }
 };
 
 // Diseños Visuales: Controlan el archivo CSS
 const VISUAL_DESIGNS = {
-    'classic':  { name: 'Académico Clásico', css: './templates./template1.css' },
-    'modern':   { name: 'Moderno', css: './templates./template2.css' },
-    'minimal':  { name: 'Minimalista', css: './templates./template3.css' },
-    'biophilic':{ name: 'Biofílico', css: './templates./template4.css' }
+    'classic':  { name: 'Académico Clásico', css: '/templates./template1.css' },
+    'modern':   { name: 'Moderno', css: './templates/template2.css' },
+    'minimal':  { name: 'Minimalista', css: './templates/template3.css' },
+    'biophilic':{ name: 'Biofílico', css: './templates/template4.css' }
 };
 
 let currentTemplateHTML = '';
