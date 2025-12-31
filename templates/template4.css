@@ -1,0 +1,734 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Merriweather', 'Georgia', serif;
+}
+
+body {
+    font-family: 'Merriweather', 'Georgia', serif;
+    line-height: 1.7;
+    margin: 0;
+    padding: 20px;
+    color: #2c5530;
+    background-color: #f9f7f0;
+    transition: all 0.6s ease;
+    background-image: 
+        radial-gradient(#c9d8c5 1px, transparent 1px),
+        radial-gradient(#c9d8c5 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+}
+
+header {
+    margin-bottom: 35px;
+    padding-bottom: 25px;
+    position: relative;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        #7c9c76 15%, 
+        #7c9c76 85%, 
+        transparent 100%);
+}
+
+.journal-header-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(124, 156, 118, 0.1);
+    border-radius: 12px;
+    transition: all 0.6s ease;
+    border: 1px solid #e8e4d9;
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #7c9c76, #a8c6a0, #7c9c76);
+}
+
+.container_title {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.journal-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #4a6b3d;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.journal-info {
+    display: block;
+    font-size: 0.95em;
+    margin-bottom: 25px;
+    color: #5a7352;
+    line-height: 1.6;
+}
+
+.a_doi {
+    color: #4a6b3d;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 2px dotted #a8c6a0;
+    padding-bottom: 1px;
+}
+
+.a_doi:hover {
+    color: #2c5530;
+    border-bottom: 2px solid #4a6b3d;
+}
+
+.author {
+    display: grid;
+    margin-top: 20px;
+    padding-top: 20px;
+    position: relative;
+}
+
+.author::before {
+    content: "✿";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #a8c6a0;
+    font-size: 1.2em;
+}
+
+.author_corresponding {
+    font-weight: 700;
+    margin-top: -15px;
+    color: #4a6b3d;
+    font-size: 0.95em;
+    font-style: italic;
+}
+
+.logo_RAE {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+    filter: sepia(0.3) brightness(1.1);
+    transition: all 0.3s ease;
+}
+
+.logo_RAE:hover {
+    transform: rotate(-2deg) scale(1.05);
+    filter: sepia(0.5) brightness(1.2);
+}
+
+.dates {
+    font-size: 0.9em;
+    margin: 15px 0;
+    color: #6b8564;
+    position: relative;
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.dates_after,
+.date_open {
+    position: relative;
+    padding: 10px 20px;
+    background: #f0f5ee;
+    border-radius: 8px;
+    border: 1px solid #d9e4d4;
+    font-style: italic;
+}
+
+.date_open::before {
+    content: "🌱";
+    position: absolute;
+    width: auto;
+    height: auto;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: none;
+    font-size: 1.2em;
+}
+
+.dates_after::after {
+    content: "🍃";
+    position: absolute;
+    width: auto;
+    height: auto;
+    background: none;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em;
+}
+
+.abstract,
+.keywords {
+    padding: 25px;
+    margin: 30px 0;
+    background: linear-gradient(135deg, #f0f5ee, #ffffff);
+    border-radius: 10px;
+    border: 1px solid #d9e4d4;
+    box-shadow: 0 4px 12px rgba(124, 156, 118, 0.08);
+    position: relative;
+}
+
+.abstract::before,
+.keywords::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #7c9c76, #a8c6a0);
+    border-radius: 10px 10px 0 0;
+}
+
+.abstract-title,
+.keywords-title {
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #4a6b3d;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.abstract-title::before {
+    content: "📜";
+    font-size: 1em;
+}
+
+.keywords-list {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.keywords-list li {
+    background: linear-gradient(135deg, #a8c6a0, #7c9c76);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(124, 156, 118, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.keywords-list li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.keywords-list li:hover::before {
+    left: 100%;
+}
+
+.keywords-list li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(124, 156, 118, 0.3);
+}
+
+.abstract h3,
+.keywords h3 {
+    color: #4a6b3d;
+    margin-bottom: 15px;
+    text-align: left;
+    font-weight: 700;
+}
+
+.article-body p {
+    display: grid;
+    gap: 30px;
+}
+
+.article-body p img {
+    width: 100%;
+    max-width: 700px;
+    min-width: 250px;
+    align-self: center;
+    justify-self: center;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(124, 156, 118, 0.15);
+    border: 1px solid #d9e4d4;
+    transition: all 0.4s ease;
+}
+
+.article-body img:hover {
+    transform: scale(1.01);
+    box-shadow: 0 12px 30px rgba(124, 156, 118, 0.25);
+}
+
+.text-aling {
+    text-align: center !important;
+}
+
+.references {
+    margin-top: 50px;
+    padding-top: 30px;
+    position: relative;
+}
+
+.references::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        #a8c6a0 15%, 
+        #a8c6a0 85%, 
+        transparent 100%);
+}
+
+.references h2 {
+    border-bottom: none;
+    padding-bottom: 10px;
+    color: #4a6b3d;
+    font-weight: 700;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.references h2::before {
+    content: "📚";
+    font-size: 1.2em;
+}
+
+.reference-item {
+    margin-bottom: 15px;
+    padding-left: 25px;
+    font-size: 0.95rem;
+    overflow-wrap: break-word;
+    position: relative;
+    line-height: 1.6;
+}
+
+.reference-item::before {
+    content: "🌿";
+    position: absolute;
+    left: 0;
+    color: #7c9c76;
+    font-size: 0.9em;
+}
+
+.container_theme {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(124, 156, 118, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid #d9e4d4;
+}
+
+.theme_claro,
+.theme_oscuro {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #a8c6a0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 8px rgba(124, 156, 118, 0.2);
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.theme_claro {
+    background: linear-gradient(135deg, #f9f7f0, #ffffff);
+}
+
+.theme_claro:hover {
+    border-color: #7c9c76;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 6px 15px rgba(124, 156, 118, 0.3);
+}
+
+.theme_oscuro {
+    background: linear-gradient(135deg, #2c5530, #1e3a24);
+}
+
+.theme_oscuro:hover {
+    border-color: #a8c6a0;
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 6px 15px rgba(124, 156, 118, 0.3);
+}
+
+.theme_claro::after {
+    content: "☀️";
+    display: block;
+    font-size: 18px;
+    width: 24px;
+    height: 24px;
+}
+
+.theme_oscuro::after {
+    content: "🌙";
+    display: block;
+    font-size: 18px;
+    width: 24px;
+    height: 24px;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: 700;
+    color: #2c5530;
+    margin-top: 15px;
+    text-align: center;
+    line-height: 1.3;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #7c9c76, #a8c6a0, #7c9c76);
+    border-radius: 2px;
+}
+
+h2 {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #4a6b3d;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #7c9c76, #a8c6a0);
+    border-radius: 2px;
+}
+
+h3 {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #5a7352;
+    margin: 25px 0 15px 0;
+    padding-left: 15px;
+    border-left: 4px solid #a8c6a0;
+}
+
+.editorial {
+    font-family: 'Merriweather', 'Georgia', serif;
+    position: relative;
+    display: inline-block;
+    font-weight: 700;
+    color: #4a6b3d;
+    font-style: italic;
+}
+
+.editorial::after {
+    content: "";
+    background: linear-gradient(90deg, #7c9c76, #a8c6a0);
+    position: absolute;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    left: 0;
+    border-radius: 1px;
+}
+
+.editorial-badge {
+    color: #2c5530;
+    font-weight: 800;
+    font-family: 'Merriweather', 'Georgia', serif;
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.editorial-badge::after {
+    position: absolute;
+    content: "";
+    display: inline-block;
+    background: linear-gradient(90deg, #7c9c76, #a8c6a0);
+    width: 100%;
+    height: 3px;
+    bottom: -4px;
+    left: 0;
+    border-radius: 2px;
+}
+
+p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+@media (max-width: 1160px) {
+    .container_theme {
+        display: grid;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 25px;
+        margin: 10px;
+    }
+    
+    .container_theme {
+        top: 10px;
+        right: 10px;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .theme_claro,
+    .theme_oscuro {
+        width: 35px;
+        height: 35px;
+    }
+
+    .theme_claro::after,
+    .theme_oscuro::after {
+        font-size: 16px;
+    }
+    
+    h1 {
+        font-size: 1.7em;
+    }
+    
+    .dates {
+        gap: 15px;
+        justify-content: flex-start;
+    }
+}
+
+/* TEMA OSCURO */
+body.dark-mode,
+.dark-mode body {
+    background-color: #000000 !important;
+    color: #d4e6cf !important;
+    background-image: 
+        radial-gradient(#1e3a24 1px, transparent 1px),
+        radial-gradient(#1e3a24 1px, transparent 1px) !important;
+}
+
+.dark-mode .container {
+    background-color: #111 !important;
+    color: #e6f0e3 !important;
+    border: 1px solid #18301a !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark-mode .container::before {
+    background: linear-gradient(90deg, #2c5530, #4a6b3d, #2c5530) !important;
+}
+
+.dark-mode .journal-header,
+.dark-mode .article-title,
+.dark-mode .editorial-badge,
+.dark-mode .article-title-en {
+    color: #a8c6a0 !important;
+}
+
+.dark-mode .dates,
+.dark-mode .author-info {
+    color: #b8d0b3 !important;
+}
+
+.dark-mode .a_doi {
+    color: #a8c6a0 !important;
+    border-bottom: 2px dotted #4a6b3d !important;
+}
+
+.dark-mode .a_doi:hover {
+    color: #d4e6cf !important;
+    border-bottom: 2px solid #a8c6a0 !important;
+}
+
+.dark-mode .logo_RAE {
+    filter: sepia(0.5) brightness(0.9) hue-rotate(10deg);
+}
+
+.dark-mode h1 {
+    color: #d4e6cf !important;
+}
+
+.dark-mode h1::after {
+    background: linear-gradient(90deg, #2c5530, #4a6b3d, #2c5530) !important;
+}
+
+.dark-mode .reference-item {
+    color: #b8d0b3 !important;
+}
+
+.dark-mode .references h2 {
+    color: #a8c6a0 !important;
+}
+
+.dark-mode .editorial {
+    color: #a8c6a0;
+}
+
+.dark-mode a {
+    color: #a8c6a0 !important;
+}
+
+.dark-mode a:hover {
+    color: #ffffff !important;
+}
+
+.dark-mode footer {
+    color: #a8c6a0 !important;
+    border-color: #2c5530 !important;
+}
+
+.dark-mode .abstract,
+.dark-mode .keywords {
+    background: linear-gradient(135deg, #0b140d, #142614) !important;
+    border-color: #2c5530 !important;
+}
+
+.dark-mode .abstract::before,
+.dark-mode .keywords::before {
+    background: linear-gradient(90deg, #0b140d, #000) !important;
+}
+
+.dark-mode .keywords-list li {
+    background: linear-gradient(135deg, #4a6b3d, #2c5530) !important;
+}
+
+.dark-mode .dates_after,
+.dark-mode .date_open {
+    background: #1e3a24 !important;
+    border-color: #2c5530 !important;
+    color: #b8d0b3 !important;
+}
+
+.dark-mode header::before {
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        #2c5530 15%, 
+        #2c5530 85%, 
+        transparent 100%) !important;
+}
+
+.dark-mode h2::after {
+    background: linear-gradient(90deg, #2c5530, #4a6b3d) !important;
+}
+
+.dark-mode .container_theme {
+    background: rgba(30, 58, 36, 0.9) !important;
+    border-color: #2c5530 !important;
+}
+
+.dark-mode .theme_claro,
+.dark-mode .theme_oscuro {
+    border-color: #4a6b3d !important;
+}
+
+.dark-mode .theme_claro:hover,
+.dark-mode .theme_oscuro:hover {
+    border-color: #a8c6a0 !important;
+}
+
+.dark-mode .references::before {
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        #2c5530 15%, 
+        #2c5530 85%, 
+        transparent 100%) !important;
+}
+
+.dark-mode .author::before {
+    color: #60964b !important;
+}
+
+.dark-mode .date_open::before,
+.dark-mode .dates_after::after {
+    filter: brightness(0.8);
+}
+
+footer {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 1px solid #d9e4d4;
+    color: #6b8564;
+    font-size: 0.9em;
+    line-height: 1.6;
+    position: relative;
+}
+
+footer::before {
+    content: "🌳";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5em;
+    background: transparent;
+    padding: 0 10px;
+}

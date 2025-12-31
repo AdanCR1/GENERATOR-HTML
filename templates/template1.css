@@ -168,11 +168,11 @@ header {
     text-align: left;
 }
 
-.article-body {
+.article-body p{
     display: grid;
 }
 
-.article-body img {
+.article-body p img {
     width: 600px;
     min-width: 250px;
     align-self: center;
