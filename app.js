@@ -12,7 +12,7 @@ const ARTICLE_LAYOUTS = {
 
 // Diseños Visuales: Controlan el archivo CSS
 const VISUAL_DESIGNS = {
-    'classic':  { name: 'Académico Clásico', css: '/templates./template1.css' },
+    'classic':  { name: 'Académico Clásico', css: '/templates/template1.css' },
     'modern':   { name: 'Moderno', css: './templates/template2.css' },
     'minimal':  { name: 'Minimalista', css: './templates/template3.css' },
     'biophilic':{ name: 'Biofílico', css: './templates/template4.css' }
