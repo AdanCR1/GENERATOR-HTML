@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="guide.css">
+    <title>MANUAL | GENERADOR HTML</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="back-button">
+            <a href="../index.html"><i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+        <div class="logo"><i class="bi bi-filetype-html"></i> GENERADOR-HTML</div>
+        <button id="theme-toggle" class="theme-btn">
+            <i data-lucide="sun" class="sun-icon"></i>
+            <i data-lucide="moon" class="moon-icon"></i>
+        </button>
+    </nav>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <nav class="index-nav">
+                <h3>CONTENIDO</h3>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#requisitos">Requisitos previos</a></li>
+                    <li><a href="#uso">Uso del generador HTML:</a></li>
+                    <ul style="margin-left: 20px;">
+                        <li><a href="#metadatos">Metadatos del Artículo</a></li>
+                        <li><a href="#titulos">Títulos</a></li>
+                        <li><a href="#autores">Autores y afiliación</a></li>
+                        <li><a href="#resumen">Resumen</a></li>
+                        <li><a href="#claves">Palabras clave</a></li>
+                        <li><a href="#cuerpo">Cuerpo del artículo</a></li>
+                        <li><a href="#agradecimientos">Agradecimientos</a></li>
+                        <li><a href="#referencias">Referencias</a></li>
+                        <li><a href="#numero">Número de revista</a></li>
+                    </ul>
+                    <li><a href="#opciones">Opciones y personalización</a></li>
+                    <li><a href="#guardado">Guardado y exportación</a></li>
+                    <li><a href="#solucion-problemas">Solución de problemas comunes</a></li>
+                    <li><a href="#contacto">Contacto y soporte</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <section>
+                <h1 id="inicio">Manual de Usuario: Generador HTML</h1>
+                <p class="lead">Cree documentos científicos elegantes sin escribir una sola línea de código.</p>
+                <div class="card">
+                    <h2>Descripción general</h2>
+                    <p>Este manual de usuario proporciona instrucciones detalladas sobre cómo utilizar el generador HTML.
+            Este generador permite crear documentos HTML desde una interfaz intuitiva, facilitando el diseño de páginas web para cada artículo científico sin necesidad de escribir código manualmente, lo que es ideal para principiantes y profesionales por igual. No se requiere experiencia previa en programación para utilizar esta herramienta.
+            El generador HTML ofrece una variedad de plantillas y opciones de tipo de artículo para adaptarse a diferentes necesidades y estilos de diseño, además también incluye una función para previsualizar el documento antes de guardarlo.
+                    </p>
+                </div>
+            </section>
+
+            <section id="requisitos">
+                <h2>Requisitos previos</h2>
+                <div class="grid-checks">
+                    <div style="user-select: all" class="check-item">Navegador moderno <i class="fa-brands fa-brave"></i><i class="fa-brands fa-edge"></i><i class="fa-brands fa-chrome"></i><i class="fa-brands fa-firefox-browser"></i></div>
+                    <div style="user-select: all" class="check-item">Conexión a Internet <i class="fa-brands fa-internet-explorer"></i></div>
+                    <div style="user-select: all" class="check-item">Documento PDF base <i class="fa-regular fa-file-pdf"></i></div>
+                    <br>
+                    <p>Damos por hecho que el usuario tiene acceso al documento PDF del artículo científico que desea publicar, ya que dicho documento pasó por revisiones previas y fué aceptada para la publicación a su revista científica. Este documento será utilizado como base para generar el HTML.</p>
+                </div>
+            </section>
+
+            <section id="uso">
+                <h2>Uso del generador HTML</h2>
+                <ul class="steps">
+                    <li>
+                        <strong>Acceso:</strong> Ingrese a la plataforma <a href="https://adancr1.github.io/GENERATOR-HTML/">https://adancr1.github.io/GENERATOR-HTML/</a> desde su navegador.
+                        <img src="../IMAGES/plataforma.png" alt="interfaz" class="doc-img">
+                    </li>
+                    <li>
+                        <strong>Preparación:</strong> Abra su PDF en una pestaña paralela.
+                        <img src="../IMAGES/pestañas-divididas.png" alt="pestañas divididas" class="doc-img">
+                    </li>
+                    <li id="metadatos">
+                        <strong>Metadatos del Artículo:</strong> Complete los campos de metadatos como Número de revista, Páginas, Fecha, ISSN, DOI y tipo de artículo.
+                        <img src="../IMAGES/metadatos.png" alt="metadatos" class="doc-img">
+                    </li>
+                    <li id="titulos">
+                        <strong>Títulos:</strong> Ingrese el título del artículo tanto en español como en inglés (No es necesario seleccionarlas como cabeceras h1 o h2 ya que vienen por defecto).
+                        <img src="../IMAGES/titulos.png" alt="titulos" class="doc-img">
+                    </li>
+                    <li id="autores">
+                        <strong>Autores y afiliación:</strong> Ingrese los nombres de los autores y sus respectivas afiliaciones. También ingrese la fecha en la que se recibió el artículo para su publicación.
+                        <img src="../IMAGES/autores.png" alt="autores" class="doc-img">
+                        <p>Utilice las herramientas del toolbar para lo super índices <sup> 1, 2, 3, n </sup>, sub índices <sub> 1, 2, 3, n </sub> y cursivas <em>I</em></p>
+                        <img src="../IMAGES/toolbar.png" alt="toolbar" class="doc-img">
+                    </li>
+                    <li id="#resumen">
+                        <strong>Resumen:</strong> Ingrese el resumen del artículo en español y en inglés al igual que las Palabras claves usando la herramienta toolbar de lista *.
+                        <img src="../IMAGES/lista.png" alt="lista" class="doc-img">
+                        <img src="../IMAGES/resumen.png" alt="resumen" class="doc-img">
+                    </li>
+                </ul>
+            </section>
+
+            <section id="">
+
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const btn = document.getElementById('theme-toggle');
+        btn.onclick = () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        }
+        lucide.createIcons();
+
+        document.querySelectorAll('.index-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+            
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+            
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center' 
+                    });
+                
+                    history.pushState(null, null, targetId);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

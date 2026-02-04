@@ -103,9 +103,18 @@ body {
     font-weight: bold;
 }
 
+.main-body-field div,
 .main-body-field {
     min-height: 300px;
-    white-space: pre-wrap;
+    display: grid;
+}
+
+
+.main-body-field div img,
+.main-body-field img {
+    width: 400px;
+    height: auto;
+    justify-self: center;
 }
 
 .export-button {
@@ -422,6 +431,24 @@ body {
     padding: 5px;
     border-radius: 30px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.guide {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 2000;
+    display: flex;
+    gap: 10px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.guide a {
+    color: #4caf50;
+    font-size: 1.4rem;
 }
 
 .theme-btn {

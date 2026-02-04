@@ -232,21 +232,18 @@ header::after {
     gap: 30px;
 }
 
-.article-body p img {
-    width: 100%;
-    max-width: 600px;
-    min-width: 250px;
-    align-self: center;
-    justify-self: center;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.15);
-    border: 1px solid rgba(100, 181, 246, 0.3);
-    transition: all 0.4s ease;
+.article-body div,
+.article-body {
+    display: grid;
 }
 
-.article-body img:hover {
-    transform: scale(1.01);
-    box-shadow: 0 12px 30px rgba(33, 150, 243, 0.25);
+.article-body div img,
+.article-body img {
+    width: 600px;
+    min-width: 250px;
+    height: auto;
+    justify-self: center;
+    border-radius: 10px;
 }
 
 .text-aling {
@@ -502,6 +499,18 @@ p {
     
     h1 {
         font-size: 1.7em;
+    }
+
+    .article-body div,
+    .article-body {
+        display: grid;
+    }
+
+    .article-body div img,
+    .article-body img {
+        width: 280px;
+        height: auto;
+        justify-self: center;
     }
 }
 

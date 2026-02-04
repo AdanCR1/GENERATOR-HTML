@@ -309,17 +309,18 @@ h3::after {
     text-indent: 0;
 }
 
-.article-body p img {
-    max-width: 100%;
+.article-body div,
+.article-body {
+    display: grid;
+}
+
+.article-body div img,
+.article-body img {
+    width: 600px;
+    min-width: 250px;
     height: auto;
-    margin: 38px auto;
-    display: block;
-    border: 6px solid #f0ebe3;
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.18);
-    background: white;
-    border-radius: 1px;
-    align-self: center;
     justify-self: center;
+    border-radius: 10px;
 }
 
 .text-align {
@@ -586,10 +587,22 @@ body.dark-mode {
     }
     
     .article-body {
-        text-align: left;
+        text-align: justify;
     }
     
     .article-body p {
         text-indent: 20px;
+    }
+
+    .article-body div,
+    .article-body {
+        display: grid;
+    }
+
+    .article-body div img,
+    .article-body img {
+        width: 280px;
+        height: auto;
+        justify-self: center;
     }
 }

@@ -168,15 +168,18 @@ header {
     text-align: left;
 }
 
-.article-body p{
+.article-body div,
+.article-body {
     display: grid;
 }
 
-.article-body p img {
+.article-body div img,
+.article-body img {
     width: 600px;
     min-width: 250px;
-    align-self: center;
+    height: auto;
     justify-self: center;
+    border-radius: 10px;
 }
 
 .text-aling {
@@ -344,6 +347,18 @@ p {
     .theme_oscuro::after {
         width: 14px;
         height: 14px;
+    }
+
+    .article-body div,
+    .article-body {
+        display: grid;
+    }
+
+    .article-body div img,
+    .article-body img {
+        width: 280px;
+        height: auto;
+        justify-self: center;
     }
 }
 
